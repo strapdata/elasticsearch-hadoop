@@ -19,6 +19,7 @@
 package org.elasticsearch.hadoop.serialization.dto;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 public class Shard implements Comparable<Shard>, Serializable {
@@ -37,6 +38,7 @@ public class Shard implements Comparable<Shard>, Serializable {
     private final String relocatingNode;
     private final Integer id;
     private final String index;
+    private final String tokenRanges;
 
     public Shard(Map<String, Object> data) {
         state = State.valueOf((String) data.get("state"));
@@ -45,6 +47,7 @@ public class Shard implements Comparable<Shard>, Serializable {
         relocatingNode = (String) data.get("relocating_node");
         node = (String) data.get("node");
         primary = Boolean.TRUE.equals(data.get("primary"));
+        tokenRanges =  String.join(",", ((List<String>) data.get("token_ranges")) ).replaceAll("\\]", "\\)");
     }
 
     @Override
@@ -97,6 +100,10 @@ public class Shard implements Comparable<Shard>, Serializable {
         return primary;
     }
 
+    public String getTokenRanges() {
+    	return this.tokenRanges;
+    }
+    
     public String getNode() {
         return node;
     }

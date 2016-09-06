@@ -18,6 +18,8 @@
  */
 package org.elasticsearch.hadoop.mr;
 
+import static org.elasticsearch.hadoop.cfg.ConfigurationOptions.ES_RESOURCE;
+
 import java.io.IOException;
 
 import org.apache.commons.logging.Log;
@@ -42,8 +44,6 @@ import org.elasticsearch.hadoop.rest.RestService;
 import org.elasticsearch.hadoop.rest.RestService.PartitionWriter;
 import org.elasticsearch.hadoop.serialization.field.MapWritableFieldExtractor;
 import org.elasticsearch.hadoop.util.Assert;
-
-import static org.elasticsearch.hadoop.cfg.ConfigurationOptions.ES_RESOURCE;
 
 /**
  * ElasticSearch {@link OutputFormat} (old and new API) for adding data to an index inside ElasticSearch.

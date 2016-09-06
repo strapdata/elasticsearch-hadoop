@@ -75,11 +75,12 @@ public class EsInputFormat<K, V> extends InputFormat<K, V> implements org.apache
         private String mapping;
         private String settings;
         private boolean onlyNode;
+        private String tokenRanges;
 
         public ShardInputSplit() {}
 
         // this long constructor is required to avoid having the serialize PartitionDefinition
-        public ShardInputSplit(String nodeIp, int httpPort, String nodeId, String nodeName, String shard,
+        public ShardInputSplit(String nodeIp, int httpPort, String nodeId, String nodeName, String shard, String tokenRanges,
                 boolean onlyNode, String mapping, String settings) {
             this.nodeIp = nodeIp;
             this.httpPort = httpPort;
@@ -89,6 +90,7 @@ public class EsInputFormat<K, V> extends InputFormat<K, V> implements org.apache
             this.onlyNode = onlyNode;
             this.mapping = mapping;
             this.settings = settings;
+            this.tokenRanges = tokenRanges;
         }
 
         @Override
@@ -202,7 +204,7 @@ public class EsInputFormat<K, V> extends InputFormat<K, V> implements org.apache
             // initialize mapping/ scroll reader
             InitializationUtils.setValueReaderIfNotSet(settings, WritableValueReader.class, log);
 
-            PartitionDefinition part = new PartitionDefinition(esSplit.nodeIp, esSplit.httpPort, esSplit.nodeName, esSplit.nodeId, esSplit.shardId, esSplit.onlyNode, settings.save(), esSplit.mapping);
+            PartitionDefinition part = new PartitionDefinition(esSplit.nodeIp, esSplit.httpPort, esSplit.nodeName, esSplit.nodeId, esSplit.shardId, esSplit.tokenRanges, esSplit.onlyNode, settings.save(), esSplit.mapping);
             PartitionReader partitionReader = RestService.createReader(settings, part, log);
 
             this.scrollReader = partitionReader.scrollReader;
@@ -459,7 +461,7 @@ public class EsInputFormat<K, V> extends InputFormat<K, V> implements org.apache
 
         int index = 0;
         for (PartitionDefinition part : partitions) {
-            splits[index++] = new ShardInputSplit(part.nodeIp, part.nodePort, part.nodeId, part.nodeName, part.shardId,
+            splits[index++] = new ShardInputSplit(part.nodeIp, part.nodePort, part.nodeId, part.nodeName, part.shardId, part.tokenRanges, 
                     part.onlyNode, part.serializedMapping, part.serializedSettings);
         }
         log.info(String.format("Created [%d] shard-splits", splits.length));

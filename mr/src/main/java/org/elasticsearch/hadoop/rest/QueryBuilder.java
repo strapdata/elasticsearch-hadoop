@@ -44,6 +44,7 @@ public class QueryBuilder {
     private long size = 50;
     private long limit = -1;
     private String shard;
+    private String tokenRanges;
     private String node;
     private boolean onlyNode;
     private String[] filters;
@@ -98,6 +99,11 @@ public class QueryBuilder {
     public QueryBuilder shard(String shard) {
         Assert.hasText(shard, "Invalid shard");
         this.shard = shard;
+        return this;
+    }
+    
+    public QueryBuilder tokenRanges(String ranges) {
+        this.tokenRanges = ranges;
         return this;
     }
 
@@ -159,6 +165,10 @@ public class QueryBuilder {
             uriParams.put("preference", pref.toString());
         }
 
+        if (StringUtils.hasText(tokenRanges)) {
+        	 uriParams.put("token_ranges",tokenRanges);
+        }
+        
         // append params
         for (Iterator<Entry<String, String>> it = uriParams.entrySet().iterator(); it.hasNext();) {
             Entry<String, String> entry = it.next();
