@@ -36,23 +36,23 @@ public abstract class RestService implements Serializable {
 
     public static class PartitionDefinition implements Serializable {
         public final String serializedSettings, serializedMapping;
-        public final String nodeIp, nodeId, nodeName, shardId;
+        public final String nodeIp, nodeId, nodeName, shardId, tokenRanges;
         public final int nodePort;
         public final boolean onlyNode;
 
         PartitionDefinition(Shard shard, Node node, String settings, String mapping, boolean onlyNode) {
-            this(node.getIpAddress(), node.getHttpPort(), node.getName(), node.getId(), shard.getName().toString(),
+            this(node.getIpAddress(), node.getHttpPort(), node.getName(), node.getId(), shard.getName().toString(), shard.getTokenRanges(),
                     onlyNode, settings, mapping);
         }
 
-        public PartitionDefinition(String nodeIp, int nodePort, String nodeName, String nodeId, String shardId,
+        public PartitionDefinition(String nodeIp, int nodePort, String nodeName, String nodeId, String shardId, String tokenRanges,
                 boolean onlyNode, String settings, String mapping) {
             this.nodeIp = nodeIp;
             this.nodePort = nodePort;
             this.nodeName = nodeName;
             this.nodeId = nodeId;
             this.shardId = shardId;
-
+            this.tokenRanges = tokenRanges;
             this.serializedSettings = settings;
             this.serializedMapping = mapping;
 
@@ -323,7 +323,9 @@ public abstract class RestService implements Serializable {
         }
 
         // take into account client node routing
-        QueryBuilder queryBuilder = QueryBuilder.query(settings).shard(partition.shardId)
+        QueryBuilder queryBuilder = QueryBuilder.query(settings)
+        		.shard(partition.shardId)
+        		.tokenRanges(partition.tokenRanges)
                 .node(partition.nodeId).restrictToNode(partition.onlyNode && (!settings.getNodesClientOnly() && !settings.getNodesWANOnly()));
         queryBuilder.fields(settings.getScrollFields());
         queryBuilder.filter(SettingsUtils.getFilters(settings));
