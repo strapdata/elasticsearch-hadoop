@@ -4,6 +4,11 @@ Supports [Map/Reduce](#mapreduce), [Cascading](#cascading), [Apache Hive](#apach
 
 See  [project page](http://www.elastic.co/products/hadoop/) and [documentation](http://www.elastic.co/guide/en/elasticsearch/hadoop/current/index.html) for detailed information.
 
+## Eleasticsearch-Hadoop connector for Elassandra
+
+This is a modified version of the Eleasticsearch-hadoop connector for [elassandra](https://github.com/vroyer/elassandra).
+See elassandra documentation for more information.
+
 ## Requirements
 Elasticsearch (__1.x__ or higher (2.x _highly_ recommended)) cluster accessible through [REST][]. That's it!
 Significant effort has been invested to create a small, dependency-free, self-contained jar that can be downloaded and put to use without any dependencies. Simply make it available to your job classpath and you're set.
