@@ -172,6 +172,7 @@ public class ShardSortingTest {
                 data.put("node", node.getId());
                 data.put("shard", 0);
                 data.put("index", shardName);
+                data.put("token_ranges", Arrays.asList("(-9223372036854775808,9223372036854775807]"));
 
                 List<Map<String, Object>> list = shardGroups.get(shardName);
                 if (list == null) {
