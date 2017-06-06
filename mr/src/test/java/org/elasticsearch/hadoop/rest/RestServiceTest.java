@@ -50,6 +50,7 @@ public class RestServiceTest {
         info.put("relocating_node", "none");
         info.put("node", "1");
         info.put("primary", "true");
+        info.put("token_ranges", Arrays.asList("(-9223372036854775808,9223372036854775807]"));
 
         Shard sh1 = new Shard(info);
         Node node1 = new Node("1", info);
