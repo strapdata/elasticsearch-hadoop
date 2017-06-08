@@ -47,7 +47,14 @@ public class Shard implements Comparable<Shard>, Serializable {
         relocatingNode = (String) data.get("relocating_node");
         node = (String) data.get("node");
         primary = Boolean.TRUE.equals(data.get("primary"));
-        tokenRanges =  String.join(",", ((List<String>) data.get("token_ranges")) ).replaceAll("\\]", "\\)");
+
+        if (primary) {
+            tokenRanges = String.join(",", ((List<String>) data.get("token_ranges")))
+            .replaceAll("\\]", "\\)");
+        }
+        else {
+            tokenRanges = null;
+        }
     }
 
     @Override
