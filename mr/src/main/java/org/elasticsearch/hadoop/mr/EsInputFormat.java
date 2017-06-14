@@ -121,6 +121,10 @@ public class EsInputFormat<K, V> extends InputFormat<K, V> implements org.apache
             utf = StringUtils.toUTF(settings);
             out.writeInt(utf.length);
             out.write(utf);
+            
+            utf = StringUtils.toUTF(tokenRanges);
+            out.writeInt(utf.length);
+            out.write(utf);
         }
 
         @Override
@@ -140,6 +144,11 @@ public class EsInputFormat<K, V> extends InputFormat<K, V> implements org.apache
             utf = new byte[length];
             in.readFully(utf);
             settings = StringUtils.asUTFString(utf);
+            
+            length = in.readInt();
+            utf = new byte[length];
+            in.readFully(utf);
+            tokenRanges = StringUtils.asUTFString(utf);
         }
 
         @Override
@@ -147,7 +156,7 @@ public class EsInputFormat<K, V> extends InputFormat<K, V> implements org.apache
             StringBuilder builder = new StringBuilder();
             builder.append("ShardInputSplit [node=[").append(nodeId).append("/").append(nodeName)
             .append("|").append(nodeIp).append(":").append(httpPort)
-            .append("],shard=").append(shardId).append("]");
+            .append("],shard=").append(shardId).append(",tokenRanges="+tokenRanges+"],");
             return builder.toString();
         }
     }
