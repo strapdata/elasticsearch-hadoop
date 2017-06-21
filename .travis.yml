@@ -1,9 +1,20 @@
 language: java
 jdk:
   - oraclejdk8
-  
 before_install:
- - "chmod +x gradlew"
- - export JAVA_OPTS="-Xmx2048m -XX:MaxPermSize=386m"
+  - chmod +x gradlew
+  - export JAVA_OPTS="-Xmx2048m -XX:MaxPermSize=386m"
 
-install: ./gradlew assemble -Pskip.signing
+install: "./gradlew assemble -Pskip.signing"
+
+deploy:
+  provider: releases
+  overwrite: true
+  api_key:
+    secure: qlNztqkjCr+TbT/d9AEMfsXGZ/RyTnZiRRF0JBiqGJ29ajND//majD0+hwJaPT0s+KfRO09RTO+ygvUMby+36XB+6CO9JErM0PNi3s8zJSGTbN1F0Po+KLbCGCrKmHST/zdy+S0szflNkwSA73oCQN1XgygvOrY1DTp3pFWJl2c0zVwTTU8gA7cogFq+FkaQ+yDnj87HCNYsRvXn6DIsZ1k8i3phKyI6pw3rYOmUYzHpBjdjgkkXMyx6/SX0ziIx16uIIiVmD4SSc91RikYGzlkRB917aRW2VXEvHKU4qOSMPDn+H4zhlU7jyEG7OfCYjznNHMO3vAQ0ZsrCV97CjQzyTn0VSc1UyHr+xxnMjpR4w8Ru0cDzFhDaiGaciaKCXXRIOz+6ToJo/VyoTKNnaWS71MBNBIlq7MAZAqQa3/eTdeRrnEGU45d64xEP2EQkk02h25DvxJDPNoM/4IZKWKO1e8wIMrPC6seSjiRmeCDKHDpv3WHJmfv2+5FJyX9S1UF6/nSKO0ZzyZsocWXN7N2D/a9sdLGb5fMn5m7ShY2kazAldTC5g7MaOBKNu9SX96VT3X1fFepyFv8jZShvLQrKSDwWXz3qUsVJTUGBmiJ9t27HYYfQglx2L5tg/n9yvW8tUKzUVP43A7/TAGq9LS4n+AZOKyGRbIl1p9FgNMI=
+  file_glob: true
+  file: build/distributions/elasticsearch-hadoop-*.zip
+  skip_cleanup: true
+  on:
+    repo: strapdata/elasticsearch-hadoop
+    tags: true
