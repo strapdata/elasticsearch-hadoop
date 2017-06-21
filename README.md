@@ -9,6 +9,10 @@ See  [project page](http://www.elastic.co/products/hadoop/) and [documentation](
 This is a modified version of the Eleasticsearch-hadoop connector for [elassandra](https://github.com/vroyer/elassandra).
 See elassandra documentation for more information.
 
+## Limitations
+
+Because Elassandra is masterless, when many spark workers concurrently create the same new index, only the first mapping update succeed and subsequent updates failed with an IndexAlreadyExistsException. To avoid such error, it is recommended to set *es.index.auto.create = false* and to manage index creation in your application code.
+
 ## Requirements
 Elasticsearch (__1.x__ or higher (2.x _highly_ recommended)) cluster accessible through [REST][]. That's it!
 Significant effort has been invested to create a small, dependency-free, self-contained jar that can be downloaded and put to use without any dependencies. Simply make it available to your job classpath and you're set.
@@ -25,7 +29,7 @@ Available through any Maven-compatible tool:
 
 ```xml
 <dependency>
-  <groupId>org.elasticsearch</groupId>
+  <groupId>com.strapdata.elasticsearch</groupId>
   <artifactId>elasticsearch-hadoop</artifactId>
   <version>2.4.4</version>
 </dependency>
@@ -38,7 +42,7 @@ Grab the latest nightly build from the [repository](http://oss.sonatype.org/cont
 
 ```xml
 <dependency>
-  <groupId>org.elasticsearch</groupId>
+  <groupId>com.strapdata.elasticsearch</groupId>
   <artifactId>elasticsearch-hadoop</artifactId>
   <version>2.4.5.BUILD-SNAPSHOT</version>
 </dependency>
@@ -362,7 +366,7 @@ See `gradlew tasks` for more information.
 
 To create a distributable zip, run `gradlew distZip` from the command line; once completed you will find the jar in `build/libs`.
 
-To build the project, JVM 7 (Oracle one is recommended) or higher is required.
+To build the project, JVM 8 (Oracle one is recommended) or higher is required.
 
 ## License
 This project is released under version 2.0 of the [Apache License][]

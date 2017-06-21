@@ -5,7 +5,7 @@ configurations {
 }
 
 dependencies {
-    provided("org.elasticsearch:elasticsearch:$esVersion")
+    provided("com.strapdata.elasticsearch:elasticsearch:$esVersion")
     provided("org.apache.hadoop:hadoop-client:$hadoop2Version")
 
     testCompile("org.apache.hadoop:hadoop-common:$hadoop2Version")

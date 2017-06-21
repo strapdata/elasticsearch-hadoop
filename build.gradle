@@ -150,9 +150,9 @@ ext.manifestTemplate = manifest {
         attributes["Created-By"] = "${System.getProperty("java.version")} (${System.getProperty("java.specification.vendor")})"
         attributes['Implementation-Title'] = project.name
         attributes['Implementation-Version'] = project.version
-        attributes['Implementation-URL'] = "http://github.com/elastic/elasticsearch-hadoop"
-        attributes['Implementation-Vendor'] = "Elastic"
-        attributes['Implementation-Vendor-Id'] = "org.elasticsearch.hadoop"
+        attributes['Implementation-URL'] = "http://github.com/strapdata/elasticsearch-hadoop"
+        attributes['Implementation-Vendor'] = "Strapdata"
+        attributes['Implementation-Vendor-Id'] = "com.strapdata.elasticsearch.hadoop"
         
         def build = System.env['ESHDP.BUILD']
         if (build != null)
@@ -199,11 +199,11 @@ allprojects { project ->
 
     dependencies {
         // makes eclipse classpath easier
-        testCompile "org.elasticsearch:elasticsearch:$esVersion"
+        testCompile "com.strapdata.elasticsearch:elasticsearch:$esVersion"
         testRuntime "org.slf4j:slf4j-log4j12:1.7.6"
         testRuntime "log4j:log4j:$log4jVersion"
         testRuntime "net.java.dev.jna:jna:4.2.2"
-        testCompile "org.elasticsearch.module:lang-groovy:$esVersion"
+        testCompile "com.strapdata..elasticsearch.module:lang-groovy:$esVersion"
         //testRuntime "org.codehaus.groovy:groovy-all:$groovyVersion"
         testRuntime "com.spatial4j:spatial4j:0.5"
         testRuntime "com.vividsolutions:jts:1.13"
