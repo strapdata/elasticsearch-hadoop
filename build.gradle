@@ -158,9 +158,9 @@ ext.manifestTemplate = manifest {
         attributes["Created-By"] = "${System.getProperty("java.version")} (${System.getProperty("java.specification.vendor")})"
         attributes['Implementation-Title'] = project.name
         attributes['Implementation-Version'] = project.version
-        attributes['Implementation-URL'] = "http://github.com/elastic/elasticsearch-hadoop"
-        attributes['Implementation-Vendor'] = "Elastic"
-        attributes['Implementation-Vendor-Id'] = "org.elasticsearch.hadoop"
+        attributes['Implementation-URL'] = "http://github.com/strapdata/elasticsearch-hadoop"
+        attributes['Implementation-Vendor'] = "Strapdata"
+        attributes['Implementation-Vendor-Id'] = "com.strapdata.elasticsearch.hadoop"
         
         def build = System.env['ESHDP.BUILD']
         if (build != null)
@@ -193,7 +193,7 @@ allprojects { project ->
         jacoco {
             enabled = project.hasProperty("enableJacoco")
             destinationFile = file("${rootProject.buildDir}/jacoco/jacocoTest.exec")
-            excludes = ["org.elasticsearch.spark.*"]
+            excludes = ["com.strapdata.elasticsearch.spark.*"]
             if (enabled) {
                 System.setProperty("log4j.configuration", "$nullLog4jConfig")
             }
@@ -207,7 +207,7 @@ allprojects { project ->
 
     dependencies {
         // makes eclipse classpath easier
-        testCompile("org.elasticsearch:elasticsearch:$esVersion") {
+        testCompile("com.strapdata.elasticsearch:elasticsearch:$esVersion") {
             exclude group: "org.apache.logging.log4j", module: "log4j-api"
         }
         testRuntime "org.slf4j:slf4j-log4j12:1.7.6"
@@ -316,12 +316,12 @@ allprojects { project ->
                 addStringOption('Xdoclint:none', '-quiet')
 
             groups = [
-            'Elasticsearch Map/Reduce' : ['org.elasticsearch.hadoop.mr*'],
-            'Elasticsearch Cascading' : ['org.elasticsearch.hadoop.cascading*'],
-            'Elasticsearch Hive' : ['org.elasticsearch.hadoop.hive*'],
-            'Elasticsearch Pig' : ['org.elasticsearch.hadoop.pig*'],
-            'Elasticsearch Spark' : ['org.elasticsearch.spark*'],
-            'Elasticsearch Storm' : ['org.elasticsearch.storm*'],
+            'Elasticsearch Map/Reduce' : ['com.strapdata.elasticsearch.hadoop.mr*'],
+            'Elasticsearch Cascading' : ['com.strapdata.elasticsearch.hadoop.cascading*'],
+            'Elasticsearch Hive' : ['com.strapdata.elasticsearch.hadoop.hive*'],
+            'Elasticsearch Pig' : ['com.strapdata.elasticsearch.hadoop.pig*'],
+            'Elasticsearch Spark' : ['com.strapdata.elasticsearch.spark*'],
+            'Elasticsearch Storm' : ['com.strapdata.elasticsearch.storm*'],
             ]
 
             links = [
@@ -435,7 +435,7 @@ allprojects { project ->
             enabled = project.hasProperty("enableJacoco")
             append = true
             destinationFile = file("${rootProject.buildDir}/jacoco/jacocoTest.exec")
-            excludes = ["org.elasticsearch.spark.*"]
+            excludes = ["com.strapdata.elasticsearch.spark.*"]
             
             if (enabled) {
                 System.setProperty("log4j.configuration", "$nullLog4jConfig")
@@ -589,7 +589,7 @@ project(":elasticsearch-hadoop-hive") {
 
 // reusable method to nest Map/Reduce module in the rest of the projects to make them usable stand-alone
 def baseSparkProject(target, sparkVersion) {
-   def scalaVer = project.hasProperty("scala") ? project.getProperty("scala") : "210"
+   def scalaVer = project.hasProperty("scala") ? project.getProperty("scala") : "211"
 
     switch (scalaVer) {
       case "211":

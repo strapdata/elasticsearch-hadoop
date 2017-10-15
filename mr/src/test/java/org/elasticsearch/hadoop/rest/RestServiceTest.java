@@ -75,12 +75,12 @@ public class RestServiceTest {
 
         ShardInfo sh6 = new ShardInfo(info);
 
-        pd1 = new PartitionDefinition(null, null, sh1.getIndex(), sh1.getName());
-        pd2 = new PartitionDefinition(null, null, sh2.getIndex(), sh2.getName());
-        pd3 = new PartitionDefinition(null, null, sh3.getIndex(), sh3.getName());
-        pd4 = new PartitionDefinition(null, null, sh4.getIndex(), sh4.getName());
-        pd5 = new PartitionDefinition(null, null, sh5.getIndex(), sh5.getName());
-        pd6 = new PartitionDefinition(null, null, sh6.getIndex(), sh6.getName());
+        pd1 = new PartitionDefinition(null, null, sh1.getIndex(), sh1.getName(), null);
+        pd2 = new PartitionDefinition(null, null, sh2.getIndex(), sh2.getName(), null);
+        pd3 = new PartitionDefinition(null, null, sh3.getIndex(), sh3.getName(), null);
+        pd4 = new PartitionDefinition(null, null, sh4.getIndex(), sh4.getName(), null);
+        pd5 = new PartitionDefinition(null, null, sh5.getIndex(), sh5.getName(), null);
+        pd6 = new PartitionDefinition(null, null, sh6.getIndex(), sh6.getName(), null);
 
         pds = Arrays.asList(pd1, pd2, pd3, pd4, pd5, pd6);
     }

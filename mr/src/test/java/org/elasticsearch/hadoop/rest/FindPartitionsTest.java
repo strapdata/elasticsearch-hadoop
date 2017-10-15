@@ -53,13 +53,13 @@ public class FindPartitionsTest {
         List<PartitionDefinition> expected =
                 new ArrayList<PartitionDefinition>();
         for (int i = 0; i < 15; i++) {
-            expected.add(new PartitionDefinition(null, null, "index1", i));
+            expected.add(new PartitionDefinition(null, null, "index1", i, null));
         }
         for (int i = 0; i < 18; i++) {
-            expected.add(new PartitionDefinition(null, null, "index2", i));
+            expected.add(new PartitionDefinition(null, null, "index2", i, null));
         }
         for (int i = 0; i < 1; i++) {
-            expected.add(new PartitionDefinition(null, null, "index3", i));
+            expected.add(new PartitionDefinition(null, null, "index3", i, null));
         }
         Collections.sort(expected);
         EXPECTED_SHARDS_PARTITIONS = expected.toArray(new PartitionDefinition[0]);

@@ -41,17 +41,18 @@ public class PartitionDefinition implements Serializable, Comparable<PartitionDe
     private final Slice slice;
     private final String serializedSettings, serializedMapping;
     private final String[] locations;
+    private final String tokenRanges;
 
-    public PartitionDefinition(Settings settings, Field mapping, String index, int shardId) {
-        this(settings, mapping, index, shardId, null, EMPTY_ARRAY);
+    public PartitionDefinition(Settings settings, Field mapping, String index, int shardId, String tokenRanges) {
+        this(settings, mapping, index, shardId, null, EMPTY_ARRAY, tokenRanges);
     }
 
-    public PartitionDefinition(Settings settings, Field mapping, String index, int shardId, String[] locations) {
-        this(settings, mapping, index, shardId, null, locations);
+    public PartitionDefinition(Settings settings, Field mapping, String index, int shardId, String[] locations, String tokenRanges) {
+        this(settings, mapping, index, shardId, null, locations, tokenRanges);
     }
 
-    public PartitionDefinition(Settings settings, Field mapping, String index, int shardId, Slice slice) {
-        this(settings, mapping, index, shardId, slice, EMPTY_ARRAY);
+    public PartitionDefinition(Settings settings, Field mapping, String index, int shardId, Slice slice, String tokenRanges) {
+        this(settings, mapping, index, shardId, slice, EMPTY_ARRAY, tokenRanges);
     }
 
     /**
@@ -63,7 +64,7 @@ public class PartitionDefinition implements Serializable, Comparable<PartitionDe
      * @param slice The slice the partition will be executed on or null
      * @param locations The locations where to find nodes (hostname:port or ip:port) that can execute the partition locally
      */
-    public PartitionDefinition(Settings settings, Field mapping, String index, int shardId, Slice slice, String[] locations) {
+    public PartitionDefinition(Settings settings, Field mapping, String index, int shardId, Slice slice, String[] locations, String tokenRanges) {
         this.index = index;
         this.shardId = shardId;
         if (settings != null) {
@@ -78,6 +79,7 @@ public class PartitionDefinition implements Serializable, Comparable<PartitionDe
         }
         this.slice = slice;
         this.locations = locations;
+        this.tokenRanges = tokenRanges;
     }
 
     public PartitionDefinition(DataInput in) throws IOException {
@@ -111,6 +113,14 @@ public class PartitionDefinition implements Serializable, Comparable<PartitionDe
         for (int i = 0; i < length; i++) {
             locations[i] = in.readUTF();
         }
+        
+        if (in.readBoolean()) {
+            byte[] utf = new byte[in.readInt()];
+            in.readFully(utf);
+            this.tokenRanges = StringUtils.asUTFString(utf);
+        } else {
+            tokenRanges = null;
+        }
     }
 
     public void write(DataOutput out) throws IOException {
@@ -140,6 +150,14 @@ public class PartitionDefinition implements Serializable, Comparable<PartitionDe
         out.writeInt(locations.length);
         for (String location : locations) {
             out.writeUTF(location);
+        }
+        
+        out.writeBoolean(tokenRanges != null);
+        if (tokenRanges != null) {
+            // same goes for settings
+            byte[] utf = StringUtils.toUTF(tokenRanges);
+            out.writeInt(utf.length);
+            out.write(utf);
         }
     }
 

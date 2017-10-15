@@ -60,6 +60,7 @@ public class SearchRequestBuilder {
     private String indices;
     private String types;
     private String shard;
+    private String tokenRanges;
     private String fields;
     private QueryBuilder query;
     private final List<QueryBuilder> filters = new ArrayList<QueryBuilder> ();
@@ -110,6 +111,11 @@ public class SearchRequestBuilder {
         return this;
     }
 
+    public SearchRequestBuilder tokenRanges(String ranges) {
+        this.tokenRanges = ranges;
+        return this;
+    }
+    
     public SearchRequestBuilder scroll(long keepAliveMillis) {
         Assert.isTrue(keepAliveMillis > 0, "Invalid scroll");
         this.scroll = TimeValue.timeValueMillis(keepAliveMillis);
@@ -223,6 +229,10 @@ public class SearchRequestBuilder {
         if (routing != null) {
             uriParams.put("routing", HttpEncodingTools.encode(routing));
         }
+
+        if (StringUtils.hasText(tokenRanges)) {
+            uriParams.put("token_ranges",tokenRanges);
+       }
 
         // append params
         for (Iterator<Entry<String, String>> it = uriParams.entrySet().iterator(); it.hasNext();) {

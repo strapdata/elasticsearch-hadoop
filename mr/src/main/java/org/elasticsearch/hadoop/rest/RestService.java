@@ -287,6 +287,7 @@ public abstract class RestService implements Serializable {
             String index = null;
             int shardId = -1;
             List<String> locationList = new ArrayList<String> ();
+            String tokenRanges = null;
             for (Map<String, Object> replica : group) {
                 ShardInfo shard = new ShardInfo(replica);
                 index = shard.getIndex();
@@ -294,6 +295,7 @@ public abstract class RestService implements Serializable {
                 if (nodes.containsKey(shard.getNode())) {
                     locationList.add(nodes.get(shard.getNode()).getPublishAddress());
                 }
+                tokenRanges= shard.getTokenRanges();
             }
             if (index == null) {
                 // Could not find shards for this partition. Continue anyway?
@@ -307,7 +309,7 @@ public abstract class RestService implements Serializable {
                 }
             } else {
                 PartitionDefinition partition = new PartitionDefinition(settings, mapping, index, shardId,
-                        locationList.toArray(new String[0]));
+                        locationList.toArray(new String[0]), tokenRanges);
                 partitions.add(partition);
             }
         }
@@ -328,6 +330,7 @@ public abstract class RestService implements Serializable {
             String index = null;
             int shardId = -1;
             List<String> locationList = new ArrayList<String> ();
+            String tokenRanges = null;
             for (Map<String, Object> replica : group) {
                 ShardInfo shard = new ShardInfo(replica);
                 index = shard.getIndex();
@@ -335,6 +338,7 @@ public abstract class RestService implements Serializable {
                 if (nodes.containsKey(shard.getNode())) {
                     locationList.add(nodes.get(shard.getNode()).getPublishAddress());
                 }
+                tokenRanges = shard.getTokenRanges();
             }
             String[] locations = locationList.toArray(new String[0]);
             if (index == null) {
@@ -358,7 +362,7 @@ public abstract class RestService implements Serializable {
                 int numPartitions = (int) Math.max(1, numDocs / maxDocsPerPartition);
                 for (int i = 0; i < numPartitions; i++) {
                     PartitionDefinition.Slice slice = new PartitionDefinition.Slice(i, numPartitions);
-                    partitions.add(new PartitionDefinition(settings, mapping, index, shardId, slice, locations));
+                    partitions.add(new PartitionDefinition(settings, mapping, index, shardId, slice, locations, tokenRanges));
                 }
             }
         }

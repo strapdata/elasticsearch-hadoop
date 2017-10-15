@@ -50,7 +50,8 @@ public class PartitionDefinitionTest {
         settings.setProperty("setting1", "value1");
         settings.setProperty("setting2", "value2");
         PartitionDefinition expected = new PartitionDefinition(settings, mapping, "foo", 12,
-                new String[] {"localhost:9200", "otherhost:9200"});
+                new String[] {"localhost:9200", "otherhost:9200"}, 
+                "[(-8421540518518415749,-4315884055388825404],(-2825629653716570156,-205128208470818044],(3565522512103312064,4675463132451453060],(6931973128375500933,8256185116251277565]]");
         BytesArray bytes = writeWritablePartition(expected);
         PartitionDefinition def = readWritablePartition(bytes);
         assertPartitionEquals(expected, def);
@@ -68,7 +69,8 @@ public class PartitionDefinitionTest {
         settings.setProperty("setting1", "value1");
         settings.setProperty("setting2", "value2");
         PartitionDefinition expected = new PartitionDefinition(settings, mapping, "bar", 37,
-                new String[] {"localhost:9200", "otherhost:9200"});
+                new String[] {"localhost:9200", "otherhost:9200"},
+                "[(-8421540518518415749,-4315884055388825404],(-2825629653716570156,-205128208470818044],(3565522512103312064,4675463132451453060],(6931973128375500933,8256185116251277565]]");
         BytesArray bytes = writeSerializablePartition(expected);
         PartitionDefinition def = readSerializablePartition(bytes);
         assertPartitionEquals(expected, def);
@@ -86,7 +88,9 @@ public class PartitionDefinitionTest {
         settings.setProperty("setting1", "value1");
         settings.setProperty("setting2", "value2");
         PartitionDefinition expected = new PartitionDefinition(settings, mapping, "foo", 12, new PartitionDefinition.Slice(10, 27),
-                new String[] {"localhost:9200", "otherhost:9200"});
+                new String[] {"localhost:9200", "otherhost:9200"},
+                "[(-8421540518518415749,-4315884055388825404],(-2825629653716570156,-205128208470818044],(3565522512103312064,4675463132451453060],(6931973128375500933,8256185116251277565]]"
+                );
         BytesArray bytes = writeWritablePartition(expected);
         PartitionDefinition def = readWritablePartition(bytes);
         assertPartitionEquals(expected, def);
@@ -105,7 +109,8 @@ public class PartitionDefinitionTest {
         settings.setProperty("setting2", "value2");
 
         PartitionDefinition expected = new PartitionDefinition(settings, mapping, "bar", 37,
-                new PartitionDefinition.Slice(13, 35),  new String[] {"localhost:9200", "otherhost:9200"});
+                new PartitionDefinition.Slice(13, 35),  new String[] {"localhost:9200", "otherhost:9200"},
+                "[(-8421540518518415749,-4315884055388825404],(-2825629653716570156,-205128208470818044],(3565522512103312064,4675463132451453060],(6931973128375500933,8256185116251277565]]");
         BytesArray bytes = writeSerializablePartition(expected);
         PartitionDefinition def = readSerializablePartition(bytes);
         assertPartitionEquals(expected, def);
