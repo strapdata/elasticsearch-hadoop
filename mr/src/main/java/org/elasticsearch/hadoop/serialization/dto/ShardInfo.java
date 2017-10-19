@@ -47,7 +47,7 @@ public class ShardInfo implements Comparable<ShardInfo>, Serializable {
         relocatingNode = (String) data.get("relocating_node");
         node = (String) data.get("node");
         primary = Boolean.TRUE.equals(data.get("primary"));
-        if (primary) {
+        if (primary && data.containsKey("token_ranges")) {
             tokenRanges = String.join(",", ((List<String>) data.get("token_ranges"))).replaceAll("\\]", "\\)");
         } else {
             tokenRanges = null;
