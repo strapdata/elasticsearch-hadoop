@@ -48,10 +48,10 @@ def customizePom(pom, gradleProject) {
         generatedPom.project {
             name = gradleProject.description
             description = gradleProject.description
-            url = 'http://github.com/elastic/elasticsearch-hadoop'
+            url = 'http://github.com/strapdata/elasticsearch-hadoop'
             organization {
-                name = 'Elastic'
-                url = 'http://www.elastic.co/'
+                name = 'Strapdata'
+                url = 'http://www.strapdata.com/'
             }
             licenses {
                 license {
@@ -61,9 +61,9 @@ def customizePom(pom, gradleProject) {
                 }
             }
             scm {
-                url = 'http://github.com/elastic/elasticsearch-hadoop'
-                connection = 'scm:git:git://github.com/elastic/elasticsearch-hadoop'
-                developerConnection = 'scm:git:git://github.com/elastic/elasticsearch-hadoop'
+                url = 'http://github.com/strapdata/elasticsearch-hadoop'
+                connection = 'scm:git:git://github.com/strapdata/elasticsearch-hadoop'
+                developerConnection = 'scm:git:git://github.com/strapdata/elasticsearch-hadoop'
             }
             developers {
                 developer {
@@ -77,7 +77,7 @@ def customizePom(pom, gradleProject) {
             }
         }
         
-        groupId = "org.elasticsearch"
+        groupId = "com.strapdata.elasticsearch"
         artifactId = project.archivesBaseName
     }
 }
