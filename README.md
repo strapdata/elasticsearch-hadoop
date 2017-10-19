@@ -1,4 +1,8 @@
-# Elasticsearch Hadoop [![Build Status](https://travis-ci.org/elastic/elasticsearch-hadoop.svg?branch=master)](https://travis-ci.org/elastic/elasticsearch-hadoop)
+# Elasticsearch Hadoop for Elassandra [![Build Status](https://travis-ci.org/strapdata/elasticsearch-hadoop.svg?branch=master)](https://travis-ci.org/strapdata/elasticsearch-hadoop)
+
+This is a modified version of the Eleasticsearch-hadoop connector for [Elassandra](https://github.com/strapdata/elassandra). 
+See [Elassandra documentation](http://doc.elassandra.io/en/latest/) for more information.
+
 Elasticsearch real-time search and analytics natively integrated with Hadoop.  
 Supports [Map/Reduce](#mapreduce), [Cascading](#cascading), [Apache Hive](#apache-hive), [Apache Pig](#apache-pig), [Apache Spark](#apache-spark) and [Apache Storm](#apache-storm).
 
@@ -22,7 +26,7 @@ Available through any Maven-compatible tool:
 
 ```xml
 <dependency>
-  <groupId>org.elasticsearch</groupId>
+  <groupId>com.strapdata.elasticsearch</groupId>
   <artifactId>elasticsearch-hadoop</artifactId>
   <version>5.5.0</version>
 </dependency>
@@ -34,7 +38,7 @@ Grab the latest nightly build from the [repository](http://oss.sonatype.org/cont
 
 ```xml
 <dependency>
-  <groupId>org.elasticsearch</groupId>
+  <groupId>com.strapdata..elasticsearch</groupId>
   <artifactId>elasticsearch-hadoop</artifactId>
   <version>5.5.1.BUILD-SNAPSHOT</version>
 </dependency>
