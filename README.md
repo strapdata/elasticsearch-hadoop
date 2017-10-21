@@ -1,4 +1,4 @@
-# Elasticsearch Hadoop for Elassandra [![Build Status](https://travis-ci.org/strapdata/elasticsearch-hadoop.svg?branch=master)](https://travis-ci.org/strapdata/elasticsearch-hadoop)
+# Elasticsearch Hadoop for Elassandra [![Build Status](https://travis-ci.org/strapdata/elasticsearch-hadoop.svg)](https://travis-ci.org/strapdata/elasticsearch-hadoop)
 
 This is a modified version of the Eleasticsearch-hadoop connector for [Elassandra](https://github.com/strapdata/elassandra). 
 See [Elassandra documentation](http://doc.elassandra.io/en/latest/) for more information.
