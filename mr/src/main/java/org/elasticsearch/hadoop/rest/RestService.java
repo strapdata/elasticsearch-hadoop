@@ -418,7 +418,12 @@ public abstract class RestService implements Serializable {
         EsMajorVersion version = InitializationUtils.discoverEsVersion(settings, log);
         ValueReader reader = ObjectUtils.instantiate(settings.getSerializerValueReaderClassName(), settings);
         // initialize REST client
-        RestRepository repository = new RestRepository(settings);
+        //RestRepository repository = new RestRepository(settings);
+        // force connection to the node having the partition.
+        Settings  nodeSettings = settings.copy().setNodes(partition.getLocations()[0]);
+        SettingsUtils.setDiscoveredNodes(nodeSettings, null);
+        RestRepository repository = new RestRepository(nodeSettings);
+        
         Field fieldMapping = null;
         if (StringUtils.hasText(partition.getSerializedMapping())) {
             fieldMapping = IOUtils.deserializeFromBase64(partition.getSerializedMapping());
@@ -450,7 +455,8 @@ public abstract class RestService implements Serializable {
                         .limit(settings.getScrollLimit())
                         .fields(SettingsUtils.determineSourceFields(settings))
                         .filters(QueryUtils.parseFilters(settings))
-                        .shard(Integer.toString(partition.getShardId()))
+                        //.shard(Integer.toString(partition.getShardId()))
+                        .shard("0")
                         .local(true)
                         .excludeSource(settings.getExcludeSource());
         if (partition.getSlice() != null && partition.getSlice().max > 1) {
